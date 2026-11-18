@@ -1,47 +1,21 @@
-# DONT PANIC!!! — Windows app
+# DONT PANIC!!! — Windows archive
 
-Offline **Electron** wrapper (same classroom pattern as Literal Order). Double-click **`DONT PANIC!!!.exe`** — no browser server.
+Offline **Electron** wrapper — same classroom pattern as **Literal Order**.
 
-Game UI is the Vite/React app in the parent folder. `npm run sync-game` builds it and copies `dist/` into `game/` before run/pack.
+**No installer.** Zip → extract → double-click **`DONT PANIC!!!.exe`**. Offline after unzip.
 
----
-
-## Requirements (Windows build machine)
-
-- **Node.js 18+**
-- Internet once (Electron / builder deps)
-
----
-
-## Dev run
+## Build
 
 ```bat
-cd accounting-game-mice
-npm install
-cd windows
-npm install
-npm start
-```
-
----
-
-## Build Windows zip (classroom artifact)
-
-**On a Windows laptop:**
-
-```bat
-cd accounting-game-mice
+cd DONT-PANIC
 npm install
 cd windows
 npm install
 npm run pack:win
 ```
 
-Output:
-
-`windows\dist\Dont-Panic-0.1.0-win-x64.zip`
-
-Unzip → double-click **`DONT PANIC!!!.exe`**. Offline after build.
+Output: `windows\dist\Dont-Panic-v0.1.0-win-x64.zip`  
+CI copies that to **`Dont-Panic-v0.1.0.zip`**.
 
 **Optional portable single `.exe`:**
 
@@ -49,23 +23,12 @@ Unzip → double-click **`DONT PANIC!!!.exe`**. Offline after build.
 npm run pack:win:portable
 ```
 
-→ `windows\dist\Dont-Panic.exe`
+## Classroom handoff (Desktop overwrite)
 
-CI uploads the zip as artifact **`dont-panic-windows`**.
+| What | Put on Desktop as |
+|------|-------------------|
+| Zip | `Dont-Panic-vX.Y.Z.zip` |
+| Extracted folder | `Dont-Panic-vX.Y.Z\` |
+| Run | `DONT PANIC!!!.exe` |
 
----
-
-## Put on the classroom laptop Desktop (overwrite)
-
-| What you copy | Desktop path |
-| --- | --- |
-| Zip for handoff | `%USERPROFILE%\Desktop\Dont-Panic.zip` |
-| Extracted app folder | `%USERPROFILE%\Desktop\Dont-Panic\` |
-
-1. Close the app if open.
-2. Delete any existing Desktop **`Dont-Panic`** / **`Dont-Panic.zip`**.
-3. Copy the new zip → Desktop as **`Dont-Panic.zip`**, extract to **`Dont-Panic`**.
-4. Open **`Desktop\Dont-Panic\DONT PANIC!!!.exe`**.
-5. Maximize / project.
-
-Unsigned build — SmartScreen may warn once (**More info → Run anyway**).
+Unsigned — SmartScreen may warn once (**More info → Run anyway**).

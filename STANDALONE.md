@@ -1,19 +1,24 @@
-# Standalone Windows app — DONT PANIC!!!
+# Standalone Windows zip — DONT PANIC!!!
 
-Same classroom handoff as **Literal Order**: build a zip, drop on Desktop, double-click the `.exe`. Offline after that.
+**No installer.** Same handoff as **Literal Order**: zip → Desktop → extract → double-click `.exe`. Offline after that.
 
-Details: [`windows/README.md`](./windows/README.md).
+Prefer the **[double-click HTML](./WEB.md)** for classmates who are not on Windows.
 
-## Quick path
+## Classroom handoff
+
+1. Download **`Dont-Panic-vX.Y.Z.zip`** (CI artifact `dont-panic-windows-vX.Y.Z`, or build below).
+2. Put it on the Desktop as **`Dont-Panic-vX.Y.Z.zip`**.
+3. Extract to **`Dont-Panic-vX.Y.Z\`**.
+4. Run **`DONT PANIC!!!.exe`**.
+5. Maximize / project.
+
+## Build
 
 ```bat
-cd accounting-game-mice
 npm install
 cd windows
 npm install
 npm run pack:win
 ```
 
-Rename/copy `windows\dist\Dont-Panic-*-win-x64.zip` → Desktop **`Dont-Panic.zip`**, extract to **`Dont-Panic\`**, run **`DONT PANIC!!!.exe`**.
-
-CI artifact name: **`dont-panic-windows`**.
+Details: [`windows/README.md`](./windows/README.md).
