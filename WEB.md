@@ -1,12 +1,13 @@
-# Local web — DONT PANIC!!!
+# DONT PANIC!!! — open in a browser (no tech setup)
 
-No Windows. No installer. No bot / cloud account.
+## What to send classmates
 
-```bash
-npm install
-npm run web
-```
+**`Dont-Panic-vX.Y.Z.html`**
 
-Open **http://127.0.0.1:1440**.
+1. Double-click the `.html` file.
+2. It opens in the browser.
+3. Play / project that window.
 
-Or use the versioned web archive: unzip → `node serve.mjs`.
+No Node. No Terminal. No installer.
+
+Build it: `npm run pack:web`
