@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "standalone:windows": "npm --prefix windows run pack:win",
     "standalone:windows:portable": "npm --prefix windows run pack:win:portable",
-    "web": "vite --host 127.0.0.1 --port 1440",
+    "web": "vite --force --host 127.0.0.1 --port 1440",
     "web:serve": "node scripts/serve-static.mjs",
     "prebuild": "node scripts/sync-version.cjs",
     "version:sync": "node scripts/sync-version.cjs",
