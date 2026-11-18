@@ -1,0 +1,38 @@
+{
+  "name": "dont-panic",
+  "private": true,
+  "version": "0.1.0",
+  "description": "DONT PANIC!!! — Ch.11 planet factory (local web + Windows zip)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "standalone:windows": "npm --prefix windows run pack:win",
+    "standalone:windows:portable": "npm --prefix windows run pack:win:portable",
+    "web": "vite --host 127.0.0.1 --port 1440",
+    "web:serve": "node scripts/serve-static.mjs",
+    "prebuild": "node scripts/sync-version.cjs",
+    "version:sync": "node scripts/sync-version.cjs",
+    "version:bump": "node scripts/bump-version.cjs patch",
+    "pack:web": "node scripts/pack-web.cjs",
+    "pack:win": "npm --prefix windows run pack:win",
+    "release:web": "npm run version:bump && npm run pack:web",
+    "release:zip": "npm run version:bump && npm run pack:win"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/oxanium": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^6.0.2",
+    "typescript": "~5.8.3",
+    "vite": "^8.0.16"
+  }
+}

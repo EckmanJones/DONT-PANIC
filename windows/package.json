@@ -1,0 +1,56 @@
+{
+  "name": "dont-panic",
+  "productName": "DONT PANIC!!!",
+  "version": "0.1.0",
+  "description": "DONT PANIC!!! — Ch.11 class game (offline Windows app)",
+  "author": "Chris Eckersen · Class project",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "sync-game": "node scripts/sync-game.js",
+    "prestart": "npm run sync-game",
+    "start": "electron .",
+    "prepack:win": "npm run sync-game",
+    "pack:win": "electron-builder --win zip --x64",
+    "pack:win:dir": "electron-builder --win dir --x64",
+    "pack:win:portable": "electron-builder --win portable --x64"
+  },
+  "build": {
+    "appId": "edu.eckmanjones.dontpanic",
+    "productName": "DONT PANIC!!!",
+    "copyright": "Class project — Chris Eckersen",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "game/**/*"
+    ],
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": [
+      "en-US"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Dont-Panic-v${version}-win-${arch}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "Dont-Panic-v${version}.exe"
+    },
+    "forceCodeSigning": false
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  }
+}

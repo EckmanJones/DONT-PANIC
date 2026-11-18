@@ -1,0 +1,83 @@
+name: Packages
+
+on:
+  push:
+    branches: [main, "cursor/**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: dont-panic-packages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-web-zip:
+    name: Build local web archive
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+      - run: node scripts/sync-version.cjs
+      - name: Read version
+        id: ver
+        run: |
+          v=$(tr -d '[:space:]' < VERSION)
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+      - run: npm run typecheck
+      - run: npm run pack:web
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dont-panic-web-v${{ steps.ver.outputs.version }}
+          path: dist-web/Dont-Panic-web-v*.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  build-windows-zip:
+    name: Build Windows zip archive
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            windows/package-lock.json
+
+      - run: npm ci
+      - run: node scripts/sync-version.cjs
+      - name: Read version
+        id: ver
+        shell: pwsh
+        run: |
+          $v = (Get-Content VERSION -Raw).Trim()
+          "version=$v" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+      - run: npm run typecheck
+      - working-directory: windows
+        run: npm ci
+      - working-directory: windows
+        run: npm run pack:win
+      - name: Name versioned handoff zip
+        shell: pwsh
+        working-directory: windows
+        run: |
+          $ver = "${{ steps.ver.outputs.version }}"
+          $src = Get-ChildItem -Path dist -Filter "Dont-Panic-*-win-x64.zip" |
+            Sort-Object LastWriteTime -Descending |
+            Select-Object -First 1
+          if (-not $src) { throw "No zip found" }
+          Copy-Item $src.FullName (Join-Path dist "Dont-Panic-v$ver.zip") -Force
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dont-panic-windows-v${{ steps.ver.outputs.version }}
+          path: windows/dist/Dont-Panic-v*.zip
+          if-no-files-found: error
+          retention-days: 14
